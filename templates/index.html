@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask Project</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         table {
             width: 100%;
@@ -30,6 +32,7 @@
             text-decoration: underline;
             color: blue;
         }
+
         .delete-btn {
             cursor: pointer;
             background-color: #ff0000;
@@ -40,89 +43,85 @@
         }
     </style>
 </head>
-<body>
-    <h1>Input Form</h1>
-    <form method="post" action="/">
-        <label for="api_id">API ID:</label>
-        <input type="text" name="api_id" required><br>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1>Input Form</h1>
+        <form method="post" action="/">
+            <div class="form-group">
+                <label for="api_id">API ID:</label>
+                <input type="text" name="api_id" class="form-control" required>
+            </div>
 
-        <label for="api_hash">API Hash:</label>
-        <input type="text" name="api_hash" required><br>
+            <div class="form-group">
+                <label for="api_hash">API Hash:</label>
+                <input type="text" name="api_hash" class="form-control" required>
+            </div>
 
-        <label for="bot_token">Bot Token:</label>
-        <input type="text" name="bot_token" required><br>
+            <div class="form-group">
+                <label for="bot_token">Bot Token:</label>
+                <input type="text" name="bot_token" class="form-control" required>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
-    <h2>Stored Inputs:</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>API ID</th>
-                <th>API Hash</th>
-                <th>Bot Token</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in inputs %}
+        <h2 class="mt-4">Stored Inputs:</h2>
+        <table class="table">
+            <thead class="thead-light">
                 <tr>
-                    <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_id }}</td>
-                    <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_hash }}</td>
-                    <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_token }}</td>
-                    <td>
-                        <button class="copy-btn" onclick="copyRowData(this)">Copy Row</button>
-                    </td>
+                    <th>API ID</th>
+                    <th>API Hash</th>
+                    <th>Bot Token</th>
+                    <th>Action</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <button class="delete-btn" onclick="confirmDelete()">Delete Database</button>
+            </thead>
+            <tbody>
+                {% for entry in inputs %}
+                    <tr>
+                        <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_id }}</td>
+                        <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_hash }}</td>
+                        <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_token }}</td>
+                        <td>
+                            <button class="btn btn-info copy-btn" onclick="copyRowData(this)">Copy Row</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="btn btn-danger delete-btn" onclick="confirmDelete()">Delete Database</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         function copyToClipboard(value) {
-            // Create a temporary textarea element to copy the data
             var textarea = document.createElement('textarea');
             textarea.value = value;
             document.body.appendChild(textarea);
-
-            // Select and copy the text
             textarea.select();
             document.execCommand('copy');
-
-            // Remove the temporary textarea
             document.body.removeChild(textarea);
-
-            // Provide some visual feedback to the user
             alert('Data copied to clipboard!');
         }
 
         function copyCellValue(cell) {
-            // Get the text content of the clicked cell
             var cellValue = cell.innerText;
-
-            // Copy the individual cell value
             copyToClipboard(cellValue);
         }
 
         function copyRowData(button) {
-            // Get the button's parent row
             var row = button.parentNode.parentNode;
-
-            // Get the text content of each cell in the row
             var apiId = row.cells[0].innerText;
             var apiHash = row.cells[1].innerText;
             var botToken = row.cells[2].innerText;
-
-            // Concatenate the data
             var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}`;
-
-            // Copy the entire row data
             copyToClipboard(dataToCopy);
         }
+
         function confirmDelete() {
             if (confirm('Are you sure you want to delete the entire database? This action cannot be undone.')) {
-                // If the user confirms, redirect to the delete route
                 window.location.href = '/delete_database';
             }
         }
