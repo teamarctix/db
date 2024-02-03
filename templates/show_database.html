@@ -25,7 +25,7 @@
 
         .copyable {
             cursor: pointer;
-            text-decoration: underline;
+            text-decoration: none;
             color: blue;
         }
 
@@ -43,6 +43,7 @@
                     <th>API ID</th>
                     <th>API Hash</th>
                     <th>Bot Token</th>
+                    <th>Owner ID</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -52,6 +53,7 @@
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_id }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_hash }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_token }}</td>
+                        <td class="copyable" onclick="copyCellValue(this)">{{ entry.owner_id }}</td>
                         <td>
                             <button class="btn btn-info copy-btn" onclick="copyRowData(this)">Copy Row</button>
                         </td>
@@ -87,7 +89,8 @@
             var apiId = row.cells[0].innerText;
             var apiHash = row.cells[1].innerText;
             var botToken = row.cells[2].innerText;
-            var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}`;
+            var ownerid = row.cells[3].innerText;
+            var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}, Owner ID: ${ownerid}`;
             copyToClipboard(dataToCopy);
         }
     </script>
