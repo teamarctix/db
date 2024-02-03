@@ -1,16 +1,51 @@
-<!-- delete_confirm.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Confirmation</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #dc3545;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h2>Confirm Database Deletion</h2>
-    <p>Are you sure you want to delete the entire database? This action cannot be undone.</p>
-    <form method="post">
-        <button type="submit">Yes, Delete Database</button>
-    </form>
+    <div class="container">
+        <h2>Confirm Database Deletion</h2>
+        <p>Are you sure you want to delete the entire database? This action cannot be undone.</p>
+        <form method="post">
+            <button type="submit" class="btn btn-danger">Yes, Delete Database</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS dependencies at the end of the body -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
