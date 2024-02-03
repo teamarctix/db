@@ -1,0 +1,87 @@
+<!-- show_database.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Database</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .copyable {
+            cursor: pointer;
+            text-decoration: underline;
+            color: blue;
+        }
+
+        .copy-btn {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Database Entries:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>API ID</th>
+                <th>API Hash</th>
+                <th>Bot Token</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in inputs %}
+                <tr>
+                    <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_id }}</td>
+                    <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_hash }}</td>
+                    <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_token }}</td>
+                    <td>
+                        <button class="copy-btn" onclick="copyRowData(this)">Copy Row</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function copyToClipboard(value) {
+            var textarea = document.createElement('textarea');
+            textarea.value = value;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Data copied to clipboard!');
+        }
+
+        function copyCellValue(cell) {
+            var cellValue = cell.innerText;
+            copyToClipboard(cellValue);
+        }
+
+        function copyRowData(button) {
+            var row = button.parentNode.parentNode;
+            var apiId = row.cells[0].innerText;
+            var apiHash = row.cells[1].innerText;
+            var botToken = row.cells[2].innerText;
+            var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}`;
+            copyToClipboard(dataToCopy);
+        }
+    </script>
+</body>
+</html>
