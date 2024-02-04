@@ -67,6 +67,11 @@
                 <input type="text" name="owner_id" class="form-control" required>
             </div>
             
+            <!-- <div class="form-group">
+                <label for="timestamp">Creation Time:</label>
+                <input type="text" name="timestamp" class="form-control" required>
+            </div> -->
+            
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
@@ -74,6 +79,7 @@
         <table class="table">
             <thead class="thead-light">
                 <tr>
+                    <th>Creation Time</th>
                     <th>API ID</th>
                     <th>API Hash</th>
                     <th>Bot Token</th>
@@ -84,10 +90,12 @@
             <tbody>
                 {% for entry in inputs %}
                     <tr>
+                        <td class="copyable">{{ entry.timestamp }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_id }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_hash }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_token }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.owner_id }}</td>
+                        <!-- <td class="copyable" onclick="copyCellValue(this)">{{ entry.timestamp }}</td> -->
                         <td>
                             <button class="btn btn-info copy-btn" onclick="copyRowData(this)">Copy Row</button>
                         </td>
@@ -124,6 +132,8 @@
             var apiHash = row.cells[1].innerText;
             var botToken = row.cells[2].innerText;
             var ownerid = row.cells[3].innerText;
+            // var timestamp = row.cells[4].innerText;
+            // var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}, Owner ID: ${ownerid}, Creation Time: ${timestamp}`;
             var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}, Owner ID: ${ownerid}`;
             copyToClipboard(dataToCopy);
         }
