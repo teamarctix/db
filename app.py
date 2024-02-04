@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
 from datetime import datetime
-
+from bson import ObjectId
 import pytz
 
 
@@ -30,7 +30,6 @@ def index():
 
         user_input = UserInput(api_id=api_id, api_hash=api_hash, bot_token=bot_token, owner_id=owner_id, timestamp=timestamp)
         db.user_inputs.insert_one({
-            # '_id': ObjectId(),
             'api_id': user_input.api_id,
             'api_hash': user_input.api_hash,
             'bot_token': user_input.bot_token,
@@ -44,6 +43,11 @@ def index():
     inputs = db.user_inputs.find()
     return render_template('index.html', inputs=inputs)
 
+@app.route('/show_database')
+def show_database():
+    inputs = db.user_inputs.find()
+    return render_template('show_database.html', inputs=inputs)
+
 @app.route('/delete_database', methods=['GET', 'POST'])
 def delete_database():
     if request.method == 'GET':
@@ -55,16 +59,14 @@ def delete_database():
         db.user_inputs.delete_many({})
 
         return redirect(url_for('index'))
-    
-@app.route('/show_database')
-def show_database():
-    inputs = db.user_inputs.find()
-    return render_template('show_database.html', inputs=inputs)
 
-# @app.route('/delete_row/<id>', methods=['POST'])
-# def delete_row(id):
-#     db.user_inputs.delete_one({'_id': ObjectId(id)})
-#     return redirect(url_for('show_database'))
+@app.route('/delete_entry/<entry_id>', methods=['GET', 'POST'])
+def delete_entry(entry_id):
+    entry_id_obj = ObjectId(entry_id)
+    db.user_inputs.delete_one({'_id': entry_id_obj})
+    return redirect(url_for('index'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
