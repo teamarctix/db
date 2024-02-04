@@ -35,7 +35,7 @@ def index():
         bot_name = bot_info_response.json()['result']['username'] if bot_info_response.status_code == 200 else None
 
         local_tz = pytz.timezone('Asia/Kolkata')  
-        timestamp = datetime.now(local_tz).strftime('%Y-%m-%d %H:%M:%S')
+        timestamp = datetime.now(local_tz).strftime('%Y-%m-%d %I:%M:%S %p')
 
         user_input = UserInput(api_id=api_id, api_hash=api_hash, bot_token=bot_token, owner_id=owner_id, timestamp=timestamp, bot_name=bot_name)
         db.user_inputs.insert_one({
