@@ -1,5 +1,6 @@
 Flask
-Flask-SQLAlchemy
 gunicorn
 pymongo
 pytz
+requests
+python-dotenv

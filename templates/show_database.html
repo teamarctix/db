@@ -76,6 +76,7 @@
                     <th>API Hash</th>
                     <th>Bot Token</th>
                     <th>Owner ID</th>
+                    <th>Bot Username</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -87,6 +88,7 @@
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.api_hash }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_token }}</td>
                         <td class="copyable" onclick="copyCellValue(this)">{{ entry.owner_id }}</td>
+                        <td class="copyable" onclick="copyCellValue(this)">{{ entry.bot_name }}</td>
                         <td>
                             <button class="btn btn-info copy-btn" onclick="copyRowData(this)">Copy</button>
                             <form style="display: inline;" action="{{ url_for('delete_entry', entry_id=entry._id) }}" method="post">
@@ -130,7 +132,8 @@
             var apiHash = row.cells[2].innerText;
             var botToken = row.cells[3].innerText;
             var ownerid = row.cells[4].innerText;
-            var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}, Owner ID: ${ownerid}`;
+            var botname = row.cells[5].innerText;
+            var dataToCopy = `API ID: ${apiId}, API Hash: ${apiHash}, Bot Token: ${botToken}, Owner ID: ${ownerid}, Bot Username: @${botname.trim()}`
             copyToClipboard(dataToCopy);
         }
 
