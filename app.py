@@ -6,10 +6,11 @@ client = MongoClient('mongodb+srv://abcd:abcd@personal.dzhmvck.mongodb.net/?retr
 db = client['data_db']
 
 class UserInput:
-    def __init__(self, api_id, api_hash, bot_token):
+    def __init__(self, api_id, api_hash, bot_token, owner_id):
         self.api_id = api_id
         self.api_hash = api_hash
         self.bot_token = bot_token
+        self.owner_id = owner_id
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -17,12 +18,14 @@ def index():
         api_id = request.form['api_id']
         api_hash = request.form['api_hash']
         bot_token = request.form['bot_token']
+        owner_id = request.form['owner_id']
 
-        user_input = UserInput(api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+        user_input = UserInput(api_id=api_id, api_hash=api_hash, bot_token=bot_token, owner_id=owner_id)
         db.user_inputs.insert_one({
             'api_id': user_input.api_id,
             'api_hash': user_input.api_hash,
-            'bot_token': user_input.bot_token
+            'bot_token': user_input.bot_token,
+            'owner_id': user_input.owner_id
         })
 
         # Redirect to avoid form resubmission on page refresh
